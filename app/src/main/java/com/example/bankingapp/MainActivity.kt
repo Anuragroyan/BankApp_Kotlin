@@ -4,6 +4,7 @@ package com.example.bankingapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -28,7 +29,13 @@ class MainActivity : ComponentActivity() {
             val vm: BankViewModel = viewModel(factory = SimpleVMFactory { BankViewModel(repository) })
             var showAdd by remember { mutableStateOf(false) }
             var showResetConfirm by remember { mutableStateOf(false) }
-            var selectedAccount by remember { mutableStateOf<AccountHolder?>(null) }
+            var selectedAccountNumber by remember { mutableStateOf<String?>(null) }
+
+            // Always derive the selected account fresh from vm.accounts
+            // This is the key fix — stale selectedAccount won't update after deposit/withdraw
+            val selectedAccount = selectedAccountNumber?.let { accNo ->
+                vm.accounts.find { it.accountNumber == accNo }
+            }
 
             Scaffold(
                 topBar = {
@@ -43,11 +50,15 @@ class MainActivity : ComponentActivity() {
                     FloatingActionButton(onClick = { showAdd = true }) { Text("+") }
                 }
             ) { padding ->
-                androidx.compose.foundation.layout.Box(Modifier.padding(padding)) {
+                Box(Modifier.padding(padding)) {
                     if (selectedAccount == null) {
-                        AccountListScreen(vm.accounts) { selectedAccount = it }
+                        AccountListScreen(vm.accounts) { selectedAccountNumber = it.accountNumber }
                     } else {
-                        AccountDetailsScreen(selectedAccount!!, onBack = { selectedAccount = null }, vm)
+                        AccountDetailsScreen(
+                            account = selectedAccount,
+                            onBack = { selectedAccountNumber = null },
+                            vm = vm
+                        )
                     }
                 }
             }
@@ -65,6 +76,7 @@ class MainActivity : ComponentActivity() {
                     confirmButton = {
                         TextButton(onClick = {
                             vm.resetData()
+                            selectedAccountNumber = null  // clear selection on reset
                             showResetConfirm = false
                         }) { Text("Confirm") }
                     },
@@ -78,4 +90,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
