@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bankingapp.data.BankRepository
 import com.example.bankingapp.data.model.AccountHolder
+import androidx.compose.ui.platform.LocalContext
+import com.example.bankingapp.data.PassbookExporter
 import com.example.bankingapp.screens.AccountDetailsScreen
 import com.example.bankingapp.screens.AccountListScreen
 import com.example.bankingapp.screens.AddAccountDialog
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
             var showAdd by remember { mutableStateOf(false) }
             var showResetConfirm by remember { mutableStateOf(false) }
             var selectedAccountNumber by remember { mutableStateOf<String?>(null) }
-
+            val context = LocalContext.current
             // Always derive the selected account fresh from vm.accounts
             // This is the key fix — stale selectedAccount won't update after deposit/withdraw
             val selectedAccount = selectedAccountNumber?.let { accNo ->
@@ -42,6 +44,12 @@ class MainActivity : ComponentActivity() {
                     TopAppBar(
                         title = { Text("🏦 Overseas Bank App") },
                         actions = {
+                            IconButton(onClick = { PassbookExporter.exportAllAndShare(context, vm.accounts) }) {
+                                Text("📤")
+                            }
+                            IconButton(onClick = { PassbookExporter.downloadAllPassbooks(context, vm.accounts) }) {
+                                Text("⬇️")
+                            }
                             IconButton(onClick = { showResetConfirm = true }) { Text("🔄") }
                         }
                     )

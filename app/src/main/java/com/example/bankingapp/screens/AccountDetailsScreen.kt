@@ -24,13 +24,20 @@ import androidx.compose.ui.unit.dp
 import com.example.bankingapp.data.model.AccountHolder
 import com.example.bankingapp.viewmodel.BankViewModel
 import androidx.compose.foundation.text.KeyboardOptions
-
+import androidx.compose.ui.platform.LocalContext
+import com.example.bankingapp.data.PassbookExporter
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 
 @Composable
 fun AccountDetailsScreen(account: AccountHolder, onBack: () -> Unit, vm: BankViewModel) {
     var depositAmount by remember { mutableStateOf("") }
     var withdrawAmount by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    var showPassbook by remember { mutableStateOf(false) }
 
     BackHandler(onBack = onBack)
 
@@ -38,6 +45,21 @@ fun AccountDetailsScreen(account: AccountHolder, onBack: () -> Unit, vm: BankVie
         Text(account.name, style = MaterialTheme.typography.titleLarge)
         Text("Account No: ${account.accountNumber}")
         Text("Balance: ₹${account.balance}")
+
+        Spacer(Modifier.height(8.dp))
+        Row {
+            Button(onClick = { PassbookExporter.exportAndShare(context, account) }) {
+                Text("📤 Share")
+            }
+            Spacer(Modifier.width(8.dp))
+            Button(onClick = { PassbookExporter.downloadPassbook(context, account) }) {
+                Text("⬇️ Download")
+            }
+        }
+        Spacer(Modifier.height(8.dp))
+        Button(onClick = { showPassbook = true }, modifier = Modifier.fillMaxWidth()) {
+            Text("📖 View Passbook")
+        }
 
         Spacer(Modifier.height(16.dp))
         Row {
@@ -80,6 +102,14 @@ fun AccountDetailsScreen(account: AccountHolder, onBack: () -> Unit, vm: BankVie
             items(account.transactions.reversed()) { tx ->
                 Text("${tx.date}: ${tx.type} ₹${tx.amount}")
             }
+        }
+    }
+    if (showPassbook) {
+        Dialog(
+            onDismissRequest = { showPassbook = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            PassbookScreen(account = account, onBack = { showPassbook = false })
         }
     }
 }
