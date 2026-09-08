@@ -1,50 +1,148 @@
-🏦 Banking App
+🏦 Banking Terminal App
 
-Banking App is a Flutter application that simulates basic banking operations, allowing users to deposit, withdraw, check account balances, and manage accounts. Account data is stored locally in a bank.json file, with an option to reset the stored data and restore the application to its initial state.
+Banking Terminal App is a Kotlin-based terminal application designed to demonstrate fundamental real-world banking operations through a command-line interface. It allows users to manage accounts and perform essential transactions such as deposits, withdrawals, balance checking, and account management.
 
-✨ Key Features
+🎯 Why This Project?
 
-* 🏦 Create and manage bank accounts
+Banking Terminal App was built to practice Kotlin fundamentals, object-oriented programming, user input handling, conditional logic, and transaction-based application flow through a simple command-line banking system.
+
+The project focuses on implementing real-world banking concepts while keeping the application lightweight and easy to understand.
+
+🚀 Features
+
+* 👤 Account creation and management
 * 💰 Deposit money
 * 💸 Withdraw money
-* 💳 Check account balances
-* 📊 View account information
-* 💾 Store account data locally
-* 📄 Manage data using bank.json
-* 🔄 Reset stored banking data
-* ⚡ Instant balance updates
-* 🛡️ Basic transaction validation
-* 📱 Clean and responsive Flutter UI
-* 🎯 Simple banking workflow
+* 💳 Check account balance
+* 🔄 Perform banking transactions
+* 🧾 Display transaction information
+* 🔐 Basic account validation
+* ⚠️ Handle invalid inputs and transactions
+* 🖥️ Command-line interface
+* 🧮 Balance calculation and management
 
-🏗️ Architecture & Workflow
+🔄 Application Workflow
 
-The application provides a simple banking interface where users can manage accounts and perform basic financial operations. Users can deposit or withdraw money, while the application updates and displays the corresponding account balance.
+Start Application → Create / Access Account → Select Banking Operation → Deposit / Withdraw / Check Balance → Validate Transaction → Update Account → Display Result → Continue / Exit
 
-Account information is stored locally using a bank.json file rather than a remote database. The reset functionality allows users to clear the current stored data and restore the application’s initial banking data.
+🧩 Main Modules
+
+👤 Account Management
+
+Users can create and manage their basic banking account information.
+
+Create Account → Enter Account Details → Validate Information → Access Account
+
+💰 Deposit
+
+Users can add money to their account.
+
+Select Deposit → Enter Amount → Validate Amount → Add To Balance → Display Updated Balance
+
+💸 Withdrawal
+
+Users can withdraw money from their available balance.
+
+Select Withdrawal → Enter Amount → Check Balance → Validate Transaction → Deduct Amount → Display Updated Balance
+
+💳 Balance Checking
+
+Users can view their current account balance.
+
+Select Balance → Retrieve Account Data → Display Current Balance
+
+🖥️ Terminal Interface
+
+The application provides a menu-driven command-line interface where users select operations using terminal input.
+
+🏗️ Architecture
+
+Main Program → Banking Menu → User Input → Banking Operations → Account Data → Updated Balance → Terminal Output
+
+Core Components
+
+* Kotlin — Primary programming language
+* Main Program — Application entry point
+* Banking Menu — Handles available operations
+* Account Model — Represents account information
+* Transaction Logic — Processes deposits and withdrawals
+* Input Handling — Reads and validates user input
 
 🛠️ Tech Stack
 
-Flutter • Dart • JSON • Local Data Storage • CRUD Operations • State Management • Responsive UI
+Kotlin • Kotlin/JVM • Object-Oriented Programming • Collections • Control Flow • Functions • Command-Line Interface
 
-▶️ Run the App
+📂 Project Structure
 
-1. Get Flutter dependencies
+BankingTerminal/ → src/ → main/kotlin/ → Main.kt • Account.kt • BankingService.kt • Transaction.kt • utils/ → build.gradle.kts → settings.gradle.kts → README.md
 
-flutter pub get
+⚙️ Getting Started
 
-2. Run the application
+1. Clone the Repository
 
-flutter run
+git clone <repository-url>
+cd BankingTerminal
 
-3. Run on Android
+2. Build the Project
 
-flutter run -d android
+./gradlew build
 
-4. Run on iOS
+3. Run the Application
 
-flutter run -d ios
+./gradlew run
 
-🎯 Project Purpose
+Or run the main() function directly from IntelliJ IDEA / Android Studio.
 
-This project demonstrates how to build a simple banking simulation using Flutter and Dart with local JSON-based data storage. It provides practical experience with account management, deposit and withdrawal operations, balance handling, local data persistence, JSON processing, state management, validation, and building a responsive mobile application.
+🔄 Transaction Flow
+
+User Selects Operation → Enter Amount → Validate Input → Process Transaction → Update Balance → Display Result
+
+🔒 Validation & Error Handling
+
+The application can handle common banking scenarios such as:
+
+* Invalid account information
+* Invalid transaction amounts
+* Withdrawal exceeding available balance
+* Invalid menu selections
+* Incorrect user input
+* Zero or negative transaction amounts
+
+🌍 Real-World Use Case
+
+Banking Terminal App demonstrates the basic workflow behind a banking system and can be used as a learning project for understanding:
+
+* 🏦 Banking operations
+* 💰 Financial transactions
+* 👤 Account management
+* 🧮 Balance calculations
+* 🖥️ Menu-driven applications
+
+For example, a user can access an account, deposit money, withdraw funds, check the updated balance, and exit the application through the terminal.
+
+🎯 Project Goals
+
+* Build a practical Kotlin command-line application
+* Practice Kotlin fundamentals
+* Implement real-world banking operations
+* Understand object-oriented programming
+* Practice input validation and error handling
+* Implement transaction and balance management
+* Build a menu-driven terminal application
+
+💼 Portfolio Highlights
+
+Banking Terminal App demonstrates practical experience with:
+
+* Kotlin
+* Kotlin/JVM
+* Object-Oriented Programming
+* Functions & Classes
+* Control Flow
+* Collections
+* User Input Handling
+* Input Validation
+* Transaction Processing
+* Account Management
+* Command-Line Application Development
+  
